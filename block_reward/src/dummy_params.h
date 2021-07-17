@@ -91,7 +91,7 @@ public:
 				
 			nOdoShapechangeInterval = 10*24*60*60; // 10 days
 			fixedSupplyCurveTarget = 17373200; // Block 17,373,200
-			lastRewardBlock = 41702928;
+			lastRewardBlock = 41709902;
 		}
 
 		int nSubsidyHalvingInterval;

@@ -3,7 +3,6 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     CAmount nSubsidy = COIN;
     LogPrintf("block height for reward is %d\n", nHeight);
 
-	
     if (nHeight < consensusParams.nDiffChangeTarget) { // < 67200
         if (nHeight < 1440)
         {
@@ -70,26 +69,27 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
 	{
 		// (Period VII)
 		// starts 2023/06/22
-		// target end 2035-01-14
+		// target end 2035-01-16
 		// Subsidy at start: 384
 		// Monthly Decay Factor: 99896/100000 and a linear component
-		// Last Block Number: 41702927
-		// Subsidy at end: 2.43067049
+		// Last Block Number: 41709901
+		// Subsidy at end: 2.63116006
 		nSubsidy = 384 * COIN;
 		int64_t blocks = nHeight - consensusParams.fixedSupplyCurveTarget;
 		int64_t months = blocks * BLOCK_TIME_SECONDS / SECONDS_PER_MONTH;
 		
 		for (int64_t i = 0; i < months; i++)
 		{
-			nSubsidy *= 99896;
+			nSubsidy *= 99888;
 			nSubsidy /= 100000;
 		}
-		nSubsidy -= months * (CAmount)(2.39279 * COIN);	// linear component to get the supply and last reward block right
+		nSubsidy -= months * (CAmount)(2.36484422 * COIN);	// linear component to get the supply and last reward block right
 	}
 	else if(nHeight == consensusParams.lastRewardBlock)
 	{
 		// special last block to make exactly 21 billion
-		nSubsidy = 2.43067049 * COIN - 29553800;
+		// iff all blocks had the maximum allowed reward
+		nSubsidy = (2.63116006 - 0.67083587) * COIN;
 	}
 	else
 		nSubsidy = 0;
